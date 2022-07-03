@@ -10,9 +10,7 @@ export const Home = () => {
   const [logIn, setLogIn] = useState({});
   const [signUp, setSignUp] = useState({});
 
-  useEffect(() => {
-    actions.logOut();
-  });
+  
 
   return (
     <>
@@ -20,7 +18,9 @@ export const Home = () => {
         <div>
           <h1>You are Logged</h1>
           <Link to="/">
-            <Button type="submit">LogOut</Button>
+            <Button onClick={actions.logOut()} type="submit">
+              LogOut
+            </Button>
           </Link>
         </div>
       ) : (
@@ -63,7 +63,7 @@ export const Home = () => {
               }}
               type="submit"
               className="Submit mt-2"
-              value={"Registrarme"}
+              value="Submit"
               variant="outline-primary"
             >
               SignUp
@@ -99,6 +99,7 @@ export const Home = () => {
               type="submit"
               className="Submit mt-2"
               variant="outline-primary"
+              value="Submit"
             >
               LogIn
             </Button>
