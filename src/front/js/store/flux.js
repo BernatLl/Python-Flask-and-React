@@ -57,11 +57,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: "Bearer " + localStorage.getItem("token"),
           },
         });
         const data = await response.json();
         setStore({ userinfo: data.user });
+        
       },
     },
   };
