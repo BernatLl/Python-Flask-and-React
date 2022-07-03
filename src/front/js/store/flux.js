@@ -61,7 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
         });
         const data = await response.json();
-        setStore({ userinfo: data.results });
+        setStore({ userinfo: data.user });
       },
     },
   };

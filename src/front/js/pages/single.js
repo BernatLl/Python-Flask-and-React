@@ -3,12 +3,15 @@ import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
+import { Navbar } from "../component/navbar";
 
 export const Single = props => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 
 	return (
+		<>
+		<Navbar/>
 		<div className="jumbotron">
 			<h1 className="display-4">This will show the demo element: {store.demo[params.theid].title}</h1>
 			<img src={rigoImageUrl} />
@@ -20,6 +23,7 @@ export const Single = props => {
 				</span>
 			</Link>
 		</div>
+		</>
 	);
 };
 
