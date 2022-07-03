@@ -6,14 +6,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       userinfo: {},
     },
     actions: {
-      logIn: async (email, password) => {
+      logIn: async (logIn) => {
         const response = await fetch(getStore().URLAPI + "login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          body: JSON.stringify(email, password),
+          body: JSON.stringify(logIn),
         });
         if (response.status == 200) {
           const data = await response.json();
@@ -25,23 +25,27 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
-      signUp: async (email, password, repeatpassword) => {
-        const response = await fetch(getStore().URLAPI + "signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(email, password, repeatpassword),
-        });
-        if (response.status == 200) {
-          const data = await response.json();
+
+      signUp: async (signUp) => {
+        try {
+          const response = await fetch(getStore().URLAPI + "signup", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(signUp),
+          });
+          if (resp.status !== 200) {
+            alert("Error!!!");
+            return false;
+          }
+          const data = await resp.json();
           localStorage.setItem("token", data.token);
 
           return true;
-        } else {
-          alert("No se ha podido realizar el registro");
-          return false;
+        } catch (error) {
+          console.error("Error!!!!!", error);
         }
       },
       logOut: () => {

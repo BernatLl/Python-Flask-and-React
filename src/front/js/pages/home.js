@@ -50,7 +50,7 @@ export const Home = () => {
             />
             <input
               onClick={() => {
-                actions.signUp();
+                actions.signUp(signUp);
               }}
               type="button"
               className="Submit mt-2"
@@ -81,7 +81,7 @@ export const Home = () => {
             />
             <input
               onClick={() => {
-                actions.logIn();
+                actions.logIn(logIn);
               }}
               type="button"
               className="Submit mt-2"
