@@ -30,17 +30,14 @@ def login():
         return jsonify({'message': 'Email is not valid'}), 404
 
     # comprobar si la contraseña es correcta
-    if not user.password == password:
+    if not check_password_hash(user.password, password):
         return jsonify({'message': 'Your pass doesn"t match'}), 500
 
-    token = create_access_token(identity=user.id, expires_delta = datetime.timedelta(minutes=60))
-
-
-    return jsonify({'token':token, 'user':user.serialize()}), 200
-
+    token = create_access_token(identity=user.id)
+    return jsonify({'token': token}), 200
 
 @api.route('/signup', methods=["POST"])
-def signUp():
+def sign_Up():
 
 
     email = request.json.get('email', None)
@@ -48,17 +45,19 @@ def signUp():
     repeatpassword = request.json.get('repeatpassword', None)
 
 
-    if not (email and password and type and repeatpassword):
+    if not (email and password and repeatpassword):
         return jsonify({'message': 'Data not provided'}), 400
 
+    passe = generate_password_hash(password)
+    user = User(email=email, password=passe)
 
-    user = User(email=email, password=password)
     try:
 
         db.session.add(user)
-        db.session.commit()
-        token = create_access_token(identity=user.id, expires_delta = datetime.timedelta(minutes=60))
+        userCreated = db.session.commit()
+        token = create_access_token(identity=userCreated.id)
         return jsonify({'token': token}), 201
+
 
     except Exception as err:
         return jsonify({'message': str(err)}), 500
@@ -67,7 +66,11 @@ def signUp():
 @api.route('/infouser', methods=['GET'])
 @jwt_required()
 def get_user_info():
-    id = get_jwt_identity()
-
-    user = User.query.get(id)
-    return jsonify({'results': user.serialize()}),200
+   
+    userId = get_jwt_identity()
+    user = User.query.filter_by(id=userId)
+   
+    userInfo_serialized = []
+    for x in user:
+        userInfo_serialized.append(x.serialize())
+    return jsonify({"user": userInfo_serialized}), 200

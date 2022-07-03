@@ -2,18 +2,18 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       URLAPI:
-        "https://3001-4geeksacade-reactflaskh-n39hc6l7gf0.ws-eu47.gitpod.io/api/",
+        "https://3001-bernatll-pythonflaskand-so2iw3mggij.ws-eu47.gitpod.io/api/",
       userinfo: {},
     },
     actions: {
-      logIn: async (user) => {
+      logIn: async (email, password) => {
         const response = await fetch(getStore().URLAPI + "login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          body: JSON.stringify(user),
+          body: JSON.stringify(email, password),
         });
         if (response.status == 200) {
           const data = await response.json();
@@ -25,16 +25,16 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
-      signUp: async (user) => {
+      signUp: async (email, password, repeatpassword) => {
         const response = await fetch(getStore().URLAPI + "signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          body: JSON.stringify(user),
+          body: JSON.stringify(email, password, repeatpassword),
         });
-        if (response.status == 201) {
+        if (response.status == 200) {
           const data = await response.json();
           localStorage.setItem("token", data.token);
 
