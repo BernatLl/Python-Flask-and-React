@@ -17,7 +17,7 @@ export const Demo = () => {
       {localStorage.token ? (
         <div className="text-center">
           <h3>Perfil</h3>
-          <p>email: {store.userinfo.email}</p>
+          <p>email: {store.userinfo.user.email}</p>
         </div>
       ) : (
         <div className="d-flex justify-content-center">

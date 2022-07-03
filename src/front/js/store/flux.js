@@ -3,7 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       URLAPI:
         "https://3001-bernatll-pythonflaskand-so2iw3mggij.ws-eu47.gitpod.io/api/",
-      userinfo: {},
+      user: {},
     },
     actions: {
       logIn: async (logIn) => {
@@ -61,7 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
         });
         const data = await response.json();
-        setStore({ userinfo: data.user });
+        setStore({ user: data.user });
         
       },
     },

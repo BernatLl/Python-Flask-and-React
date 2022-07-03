@@ -1,20 +1,28 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
-import { Button } from 'react-bootstrap';
-
+import { Button } from "react-bootstrap";
+import { Navbar } from "../component/navbar";
 export const Home = () => {
   const { store, actions } = useContext(Context);
   const [logIn, setLogIn] = useState({});
   const [signUp, setSignUp] = useState({});
+
+  useEffect(() => {
+    actions.logOut();
+  });
+
   return (
     <>
       {localStorage.token ? (
-        <Link to="demo">
-          <input type="button" value="Mi perfil" />
-        </Link>
+        <div>
+          <h1>You are Logged</h1>
+          <Link to="/">
+            <Button type="submit">LogOut</Button>
+          </Link>
+        </div>
       ) : (
         <div>
           <div className="text-center mt-5 mx-auto" style={{ width: "10rem" }}>
@@ -53,11 +61,13 @@ export const Home = () => {
               onClick={() => {
                 actions.signUp(signUp);
               }}
-              type="button"
+              type="submit"
               className="Submit mt-2"
               value={"Registrarme"}
-			  variant="outline-primary">SignUp</Button>
-            
+              variant="outline-primary"
+            >
+              SignUp
+            </Button>
           </div>
           <div className="text-center mt-5 mx-auto" style={{ width: "10rem" }}>
             <h4>Iniciar sesión</h4>
@@ -81,16 +91,17 @@ export const Home = () => {
               id="password"
               className="inputgroup"
             />
-			
-			<Link to={"/demo/" + store.userinfo.id} >
-			<Button  onClick={() => {
+
+            <Button
+              onClick={() => {
                 actions.logIn(logIn);
               }}
-              type="button"
+              type="submit"
               className="Submit mt-2"
-              value={"Enviar"}
-			  variant="outline-primary">LogIn</Button>
-            </Link>
+              variant="outline-primary"
+            >
+              LogIn
+            </Button>
           </div>
         </div>
       )}
